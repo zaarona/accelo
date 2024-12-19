@@ -102,6 +102,11 @@ def upload_data(project_name, version_name):
 
 @bp.route('/data-sheet/<string:project_name>/<string:version_name>', methods=['GET'])
 def get_data_sheet(project_name, version_name):
+    try:
+        return send_file(f'../cloud/{project_name}/{version_name}/input/data.zip')
+    except FileNotFoundError:
+        pass
+
     version = db.session.query(Version).filter_by(
         project_name=project_name,
         version_name=version_name
@@ -123,10 +128,5 @@ def get_data_sheet(project_name, version_name):
         compressed = zlib.compress(json_data.encode('utf-8'), level=9)  # Ensure maximum compression
         compressed_b64 = base64.b64encode(compressed).decode('utf-8')
         return compressed_b64
-
-    try:
-        return send_file(f'../cloud/{project_name}/{version_name}/input/data.zip')
-    except FileNotFoundError:
-        pass
 
 
