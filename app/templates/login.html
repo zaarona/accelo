@@ -1,0 +1,279 @@
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&family=Exo+2:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <!--  favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/img/logo.png">
+    <title>FTI Accelo</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            width: 100vw;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Barlow', sans-serif;
+            background-color: rgb(248, 255, 255);
+            margin: 0px;
+            border: 0px;
+            padding: 0px;
+        }
+
+        /* Glowing and flashing with scaling */
+        @keyframes lightning-glow {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: brightness(1) drop-shadow(0 0 1px #daa9f3) drop-shadow(0 0 3px #640395);
+            }
+
+            50% {
+                opacity: .2;
+                transform: scale(1.01);
+                filter: brightness(1) drop-shadow(0 0 1px #8c06b1) drop-shadow(0 0 3px rgb(132, 5, 148));
+            }
+        }
+
+        /* Lightning effect after triangles converge */
+        .lightning {
+            animation: lightning-glow 0.03s ease-in-out alternate 8;
+        }
+
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        ::placeholder {
+            color: white;
+            opacity: .8;
+            /* Firefox */
+        }
+        #svg-logo path {
+            fill: white;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.js"
+        integrity="sha512-+maVcOki4j7Zo1VOqbhjH/fKV7iuE9WYMdhObx1ozxz2xu3qZMVCGHOAZKLKLksakyaWllQzafnLZSGBRl3lRg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.fog.min.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+    <div id="loading-screen"
+        style="z-index:100000; display: none; height: 100vh; width: 100vw; position: fixed; top:0px; left:0px;">
+        <div style="display:flex; justify-content: center; align-items: center; height:100vh; width:100vw;">
+            <div>
+                <div style="display:flex; justify-content: center; align-items: center; margin:10px; font-size: 3rem; font-weight: 300; color: #1b645b; text-align: center; flex-direction: column;"
+                    id="spark">
+                    <div>A C C E L O</div>
+                    <div style="font-size: 1rem; font-weight: 100; color: #1b645b; margin-top: 10px;">Revenue Acceleration Tool</div>
+                </div>
+
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="width: 200px; height: 200px; " viewbox="0 0 170 170">
+                        <path d="M0,0 L6,1 L32,16 L56,30 L59,32 L59,98 L46,106 L40,109 L39,43 L11,27 L3,22 L-2,24 L-25,37 L-35,43 L-36,109 L-51,101 L-55,98 L-55,32 L-38,22 L-14,8 Z " fill="#1b645b" transform="translate(83,20)"/>
+                        <path d="M0,0 L5,2 L19,10 L20,11 L20,33 L11,39 L2,44 L-3,42 L-17,34 L-18,33 L-18,11 L-5,3 Z " fill="#16554e" transform="translate(84,63)"/>
+                        <path d="M0,0 L1,0 L1,66 L-12,74 L-18,77 L-18,11 L-5,3 Z " fill="#154f4a" transform="translate(141,52)"/>
+                        <path d="M0,0 L11,6 L19,11 L19,77 L4,69 L0,66 Z " fill="#144c47" transform="translate(28,52)"/>
+                        <path d="M0,0 L12,6 L17,9 L23,8 L37,0 L38,0 L38,22 L25,30 L20,33 L15,31 L0,22 Z " fill="#194e49" transform="translate(66,118)"/>
+                        <path d="M0,0 L1,0 L1,22 L-12,30 L-18,32 L-18,11 L-9,5 Z " fill="#133d3a" transform="translate(103,118)"/>
+                        <path d="M0,0 L1,0 L1,22 L-8,28 L-18,33 L-18,11 L-5,3 Z " fill="#123a37" transform="translate(103,74)"/>
+                        <path d="M0,0 L5,2 L19,10 L18,13 L2,22 L-4,20 L-17,12 L-17,10 Z " fill="#1a6058" transform="translate(84,63)"/>
+                        <path d="M0,0 L2,1 L1,21 L-3,19 L-2,16 L-2,2 Z " fill="#1a5c54" transform="translate(84,128)"/>
+                        <path d="M0,0 L3,0 L3,3 L10,2 L11,9 L-2,2 Z " fill="#17664f" transform="translate(36,120)"/>
+                        <path d="M0,0 L6,1 L3,4 L-1,6 L-2,1 Z " fill="#145945" transform="translate(126,122)"/>
+                        <path d="M0,0 L1,0 L1,17 L-3,18 L-1,15 L-1,2 Z " fill="#123833" transform="translate(103,123)"/>
+                        <path d="M0,0 L1,0 L1,5 L-1,6 L-1,4 L-5,6 L-6,3 Z " fill="#17433a" transform="translate(103,118)"/>
+                        <path d="M0,0 L3,2 L0,5 L-5,4 L-2,1 Z " fill="#1a6058" transform="translate(59,34)"/>
+                        <path d="M0,0 L3,0 L3,3 L6,3 L5,6 L-2,2 Z " fill="#165850" transform="translate(36,120)"/>
+                      </svg>
+                      
+                </div>
+                <div style="display:flex; justify-content: center; align-items: center; margin:10px; font-size: 3rem; font-weight: 100; color: #1b645b; text-align: center; flex-direction: column;"
+                    id="spark">
+                    <div style="font-size: 1rem; font-weight: 100; color: #1b645b;">by</div>
+                </div>
+                <div style="display:flex; justify-content: center; align-items: center; margin:10px;  margin-top:20px; font-size: 1.5rem; font-weight: 100; opacity: 1; color:#1b645b;"
+                    id="fti-delta">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="139" height="29" viewBox="0 0 139 29" fill="#1b645b">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M0.0820312 0.187435L0.0829758 27.875H10.983V12.2067H13.9253V27.875H17.116V12.2067H20.0186V27.875H23.2093V12.2067H26.1921V27.875H28.136V10.2452V10.2404H7.06129V7.20744H28.136V5.24211H3.14142V2.15372H28.136V0.187435H0.0820312Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M44.8388 28.1195C42.8175 28.1195 41.2939 26.5295 41.2939 24.4209C41.2939 22.3267 42.8591 20.6879 44.8587 20.6879C46.1876 20.6879 46.9603 21.2332 47.596 21.8215L47.8312 22.0392L47.051 22.8471L46.8309 22.6323C46.3841 22.1958 45.7994 21.7508 44.8483 21.7508C43.4598 21.7508 42.4123 22.8834 42.4123 24.3837C42.4123 25.8811 43.4862 27.0557 44.8587 27.0557C45.6313 27.0557 46.2179 26.7845 46.8847 26.1179L47.0991 25.9031L47.8642 26.6594L47.6413 26.8809C47.0283 27.4931 46.215 28.1195 44.8388 28.1195Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M54.4873 28.1195C52.4499 28.1195 50.9131 26.5295 50.9131 24.4209C50.9131 22.3267 52.4914 20.6879 54.5052 20.6879C56.5105 20.6879 58.0472 22.2493 58.0775 24.3188V24.4591C58.0472 26.5114 56.4699 28.1195 54.4873 28.1195ZM54.4873 21.7508C53.0865 21.7508 52.0305 22.8834 52.0305 24.3837C52.0305 25.8811 53.1177 27.0557 54.5052 27.0557C55.906 27.0557 56.961 25.9231 56.961 24.4209C56.961 22.9235 55.8748 21.7508 54.4873 21.7508Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M66.9973 20.7994V25.9457L62.9603 20.7994H62.0479V28.0037H63.1284V22.737L67.258 28.0037H68.0778V20.7994H66.9973Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M74.6923 28.0992C73.6033 28.0992 72.7305 27.7497 71.8634 26.9685L71.6367 26.7641L72.3612 25.9247L72.5935 26.1386C73.285 26.7842 73.8819 27.0354 74.7197 27.0354C75.5084 27.0354 76.0591 26.6247 76.0591 26.0384C76.0591 25.5905 75.941 25.2238 74.4637 24.9239C72.7522 24.5725 72.0211 23.9279 72.0211 22.7657C72.0211 21.5911 73.0535 20.7048 74.4231 20.7048C75.3818 20.7048 76.0836 20.957 76.8468 21.5729L77.0877 21.7677L76.3878 22.6453L76.1469 22.4372C75.618 21.9759 75.0805 21.7687 74.4042 21.7687C73.6609 21.7687 73.1206 22.1593 73.1206 22.6998C73.1206 23.0789 73.1206 23.5096 74.7726 23.8534C76.4208 24.1924 77.1566 24.8466 77.1566 25.9734C77.1566 27.2254 76.1431 28.0992 74.6923 28.0992Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M83.9479 28.1087C82.1117 28.1087 80.9688 26.9017 80.9688 24.9573V20.7994H82.0691V24.9105C82.0691 26.2867 82.7426 27.0449 83.9658 27.0449C85.1824 27.0449 85.8256 26.3229 85.8256 24.9573V20.7994H86.9241V24.9019C86.9241 26.8797 85.7841 28.1087 83.9479 28.1087Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M91.1709 20.7994V28.0037H96.0929V26.9322H92.2704V20.7994H91.1709Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M98.001 20.7994V21.8737H100.273V28.0037H101.371V21.8737H103.641V20.7994H98.001Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M107.343 28.003H108.44V20.7987H107.343V28.003Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M117.714 20.7994V25.9457L113.677 20.7994H112.765V28.0037H113.843V22.737L117.975 28.0037H118.794V20.7994H117.714Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M126.347 28.1195C124.239 28.1195 122.766 26.5992 122.766 24.4209C122.766 22.5855 124.084 20.6879 126.291 20.6879C127.332 20.6879 128.076 20.9592 128.867 21.6257L129.109 21.8282L128.386 22.6686L128.151 22.4642C127.733 22.0927 127.215 21.7508 126.262 21.7508C124.927 21.7508 123.882 22.9073 123.882 24.3837C123.882 25.988 124.88 27.0653 126.365 27.0653C127.238 27.0653 127.883 26.6575 128.132 26.4722V25.0426H125.954V23.9702H129.212V26.9583L129.163 27.0041C128.361 27.7223 127.362 28.1195 126.347 28.1195Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M133.679 0.175404V0.588907H134.471V2.74142H134.899V0.588907H135.689V0.175404H133.679Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M138.286 0.175404L137.51 1.9698L136.744 0.175404H136.202V2.74142H136.63V0.978536L137.374 2.74142H137.644L138.389 0.979491V2.74142H138.817V0.175404H138.286Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M80.9297 0.183998V3.54646H88.5418V16.4071H91.8647V3.54646H99.3899V0.183998H80.9297Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M126.007 16.4068H129.333V0.192307H126.007V16.4068Z" fill="#1b645b"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M41.332 0.183998L41.3311 16.4071H44.6691V10.6486H51.8363V7.28709H44.6691V3.54646H57.6405V0.183998H41.332Z" fill="#1b645b"/>
+                        </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fog" style="position:fixed; top:0px; left:0px; z-index: 100; width: 100vw; height: 100vh; overflow: hidden;">
+    </div>
+    <div id="login-screen" style="display:none;position:fixed; top:0px; left:0px; z-index: 101;">
+        <div style="display:flex; justify-content: center; align-items: center; height:100vh; width: 100vw;">
+            <div style="display:flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div style="display:flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <input type="text" placeholder="Username" style="    padding: 12px;
+                    margin: 14px;
+                    border-radius: 0px;
+                    text-align: center;
+                    font-size: 13px;
+                    width: 200px;
+                    height: 40px;
+                    border: none;
+                    color: #1b645b;
+                    border-radius: 5px;
+                    background-color: white;
+                    outline: none;">
+                    <input type="password" placeholder="Password" style="    padding: 12px;
+                    margin: 14px;
+                    margin-top:0px;
+                    border-radius: 0px;
+                    text-align: center;
+                    font-size: 13px;
+                    width: 200px;
+                    height: 40px;
+                    border: none;
+                    border-radius: 5px;
+                    color: #1b645b;
+                    background-color: white;
+                    outline: none;">
+                    <button style="padding: 12px;
+                    margin: 14px;
+                    margin-top:0px;
+                    border-radius: 0px;
+                    text-align: center;
+                    font-size: 13px;
+                    width: 200px;
+                    border: none;
+                    border-radius: 5px;
+                    background-color: #1b645b;
+                    color: white;
+                    cursor: pointer;
+                    outline: none;" id="login">Login</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        $('#loading-screen').show();
+        function animateTriangles() {
+            const groups = ['#loading-screen #group1', '#loading-screen #group2', '#loading-screen #group3', '#loading-screen #group4', '#loading-screen #group5', '#loading-screen #group6', '#loading-screen #group7'];
+            var alternate = 0;
+            var once = 0;
+            groups.forEach(group => {
+                alternate = alternate === 0 ? 1 : 0;
+                anime({
+                    targets: group,
+                    translateX: () => alternate === 0 ? anime.random(-500, -300) : 0,  // Random X starting position
+                    translateY: () => alternate === 1 ? anime.random(-500, -300) : 0,  // Random Y starting position
+                    rotate: () => 0, // anime.random(-360, 360),      // Random rotation
+                    duration: () => 0,   // Random speed (1s to 3s)
+                    easing: 'easeInOutQuad',                    // Smooth easing
+                    direction: 'normal',
+                    // Ensure they move back to original positions
+                    complete: () => {
+                        anime({
+                            targets: group,
+                            translateX: 0,                      // Move back to the original X position
+                            translateY: 0,                      // Move back to the original Y position
+                            rotate: 0,                          // Return to the original rotation
+                            duration: 800,                     // Duration for the return animation
+                            easing: 'easeInOutQuad',
+                            complete: () => {
+                                document.querySelector(group).classList.add('lightning');
+                                if (once == 1) return;
+                                once = 1;
+                                // Once all triangles are done animating, add the lightning effect class
+                                $('#spark').animate({ opacity: 1 }, 2000);
+                                setTimeout(() => {
+                                    $('#fti-delta').animate({ opacity: 1 }, 1400);
+                                }, 700);
+                                setTimeout(() => {
+                                    $('#loading-screen').fadeOut(1000);
+                                    $('#login-screen').fadeIn(1000);
+                                }, 3000);
+
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+        // Start the scaling animation
+        // animateTriangles();
+        let vanta_effect = VANTA.FOG({
+            el: "#fog",
+            minHeight: 200.00,
+            minWidth: 200.00,
+            highlightColor: 0x1b645b,
+  midtoneColor: 0x1b645b,
+  lowlightColor: 0x1b645b,
+  baseColor: 0xffe6e6,
+            blurFactor: 0.57,
+            speed: 1.10,
+            zoom: 0.30
+        })
+        $(document).ready(() => {
+            $('#login').on('click', () => {
+                $.ajax({
+                    url: 'auth/login',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        username: $('input[type="text"]').val(),
+                        password: $('input[type="password"]').val()
+                    }),
+                    success: (data) => {
+                        if (data.status === 'success') {
+                            window.location.href = '/';
+                        } else {
+                            alert('Invalid credentials');
+                        }
+                    },
+                    error: (xhr, status, error) => {
+                        alert('Login failed: ' + error);
+                    }
+                });
+            });
+        });
+
+        function login() {
+            setTimeout(() => {
+                vanta_effect.destroy();
+                $('#fog').remove();
+            }, 1000);
+        }
+
+        setTimeout(() => {
+            $('#loading-screen').fadeOut(1000);
+            $('#login-screen').fadeIn(1000);
+        }, 3000);
+    </script>
+</body>
+
+</html>

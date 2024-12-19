@@ -1,0 +1,200 @@
+ /* Modern Vibrant Theme */
+.pvtUi {
+    font-family: 'Titillium Web', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+.pvtUi select{
+    width: 100px;
+}
+.pvtFilterBox button{
+    margin: 10px;
+    margin-bottom: 0px;
+}
+
+.pvtAxisContainer li span.pvtAttr{
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+/* Drag & Drop Areas */
+.pvtAxisContainer, .pvtVals {
+    background: #f8f9ff;
+    border: 2px dashed #e0e6ff;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 4px;
+    transition: all 0.3s ease;
+}
+
+.pvtAxisContainer:hover, .pvtVals:hover {
+    border-color: #4f37d7;
+    background: #f0f2ff;
+}
+
+/* Draggable Elements */
+.pvtAxisContainer li {
+    background: rgb(5 78 168);
+    border: 1px solid #e0e6ff;
+    padding: 2px;
+    margin: 4px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+    color: white;
+}
+
+.pvtAxisContainer li:hover {
+    background: white;
+    color: #4f37d7;
+    border-color: #4f37d7;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(79, 55, 215, 0.2);
+}
+
+/* Dropdowns */
+.pvtUi select {
+    background: white;
+    border: 1px solid #e0e6ff;
+    border-radius: 5px;
+    padding: 8px 12px;
+    color: #2c3e50;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pvtUi select:hover {
+    border-color: #4f37d7;
+    box-shadow: 0 4px 8px rgba(79, 55, 215, 0.1);
+}
+
+/* Table Styling */
+.pvtTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.pvtTable thead tr th,
+.pvtTable tbody tr th {
+    background: #f8f9ff;
+    border: 1px solid #e0e6ff;
+    padding: 12px 16px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.pvtTable tbody tr td {
+    padding: 12px 16px;
+    border: 1px solid #e0e6ff;
+    transition: all 0.2s ease;
+}
+
+.pvtTable tbody tr:hover td {
+    background: #f0f2ff;
+}
+
+/* Total Cells */
+.pvtTotal, .pvtGrandTotal {
+    background: #4f37d7 !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+/* Value Cells */
+.pvtVal {
+    background: white;
+}
+
+/* Sorting Indicators */
+.pvtTriangle {
+    color: #4f37d7;
+}
+
+/* Search Box */
+.pvtSearch {
+    border: 1px solid #e0e6ff;
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin: 4px;
+    transition: all 0.2s ease;
+}
+
+.pvtSearch:focus {
+    border-color: #4f37d7;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 55, 215, 0.1);
+}
+
+/* Checkboxes */
+.pvtCheckContainer {
+    background: white;
+    border: 1px solid #e0e6ff;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 4px;
+}
+
+.pvtCheckContainer p {
+    margin: 4px;
+    color: #2c3e50;
+}
+
+/* Filter Box */
+.pvtFilterBox {
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border: none;
+    padding: 16px;
+}
+
+.pvtFilterBox h4 {
+    margin: 0 0 12px 0;
+    color: #2c3e50;
+}
+
+.pvtFilterBox button {
+    background: #4f37d7;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pvtFilterBox button:hover {
+    background: #3c2aa3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(79, 55, 215, 0.2);
+}
+
+/* Renderer Area */
+.pvtRendererArea {
+    padding: 20px 0;
+}
+
+/* Plotly Charts */
+.js-plotly-plot {
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pvtUi {
+    animation: fadeIn 0.3s ease-out;
+}

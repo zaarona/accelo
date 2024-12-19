@@ -1,0 +1,703 @@
+<html lang="en"><head></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACCELO</title>
+    <link rel="icon" href="./assets/img/logo.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&amp;family=Exo+2:ital,wght@0,100..900;1,100..900&amp;family=Oxanium:wght@200..800&amp;family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/main.css">
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <link href="./assets/js/vendor/query-builder.default.css" rel="stylesheet">
+    <link rel='stylesheet' href='./assets/js/vendor/chosen.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.css" integrity="sha512-MKxcSu/LDtbIYHBNAWUQwfB3iVoG9xeMCm32QV5hZ/9lFaQZJVaXfz9aFa0IZExWzCpm7OWvp9zq9gVip/nLMg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script>
+
+
+	
+    <style>
+        body {
+            background-color: white;
+            font-family: 'Barlow', sans-serif;
+        }
+        .deck-tooltip {
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+            padding: 0px !important;
+        }
+        .tooltip-content{
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body> 
+	<div id="project-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<form id="project-form">
+				<div class="form-group">
+					<label for="project-name">Project Name:</label>
+					<input type="text" id="project-name" required>
+				</div>
+				<div class="form-group">
+					<label for="project-description">Description:</label>
+					<textarea id="project-description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="client-name">Client Name:</label>
+					<input type="text" id="client-name" required>
+				</div>
+				<div class="form-buttons">
+					<button type="submit" class="btn-primary">Create</button>
+					<button type="button" class="btn-secondary" onclick="eventManager.closeModal('project-modal')">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	<div id="version-modal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<form id="version-form">
+				<div class="form-group">
+					<label for="version-name">Version Name:</label>
+					<input type="text" id="version-name" required>
+				</div>
+				<div class="form-group">
+					<label for="version-description">Description:</label>
+					<textarea id="version-description" required></textarea>
+				</div>
+				<div class="form-buttons">
+					<button type="submit" class="btn-primary">Create</button>
+					<button type="button" class="btn-secondary" onclick="events.closeModal('version-modal')">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>
+    <div id="loading-screen" style="display: none; background-color: #ffffff;">
+        <div id="title" style="color: #1b645b;">
+			A C C E L O
+        </div>
+        <div id="Accelo-logo" style="transform: scale(1);" >
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="width: 100px; height: 100px;" viewbox="0 0 170 170">
+				<path d="M0,0 L6,1 L32,16 L56,30 L59,32 L59,98 L46,106 L40,109 L39,43 L11,27 L3,22 L-2,24 L-25,37 L-35,43 L-36,109 L-51,101 L-55,98 L-55,32 L-38,22 L-14,8 Z " fill="#1b645b" transform="translate(83,20)"/>
+				<path d="M0,0 L5,2 L19,10 L20,11 L20,33 L11,39 L2,44 L-3,42 L-17,34 L-18,33 L-18,11 L-5,3 Z " fill="#16554e" transform="translate(84,63)"/>
+				<path d="M0,0 L1,0 L1,66 L-12,74 L-18,77 L-18,11 L-5,3 Z " fill="#154f4a" transform="translate(141,52)"/>
+				<path d="M0,0 L11,6 L19,11 L19,77 L4,69 L0,66 Z " fill="#144c47" transform="translate(28,52)"/>
+				<path d="M0,0 L12,6 L17,9 L23,8 L37,0 L38,0 L38,22 L25,30 L20,33 L15,31 L0,22 Z " fill="#194e49" transform="translate(66,118)"/>
+				<path d="M0,0 L1,0 L1,22 L-12,30 L-18,32 L-18,11 L-9,5 Z " fill="#133d3a" transform="translate(103,118)"/>
+				<path d="M0,0 L1,0 L1,22 L-8,28 L-18,33 L-18,11 L-5,3 Z " fill="#123a37" transform="translate(103,74)"/>
+				<path d="M0,0 L5,2 L19,10 L18,13 L2,22 L-4,20 L-17,12 L-17,10 Z " fill="#1a6058" transform="translate(84,63)"/>
+				<path d="M0,0 L2,1 L1,21 L-3,19 L-2,16 L-2,2 Z " fill="#1a5c54" transform="translate(84,128)"/>
+				<path d="M0,0 L3,0 L3,3 L10,2 L11,9 L-2,2 Z " fill="#17664f" transform="translate(36,120)"/>
+				<path d="M0,0 L6,1 L3,4 L-1,6 L-2,1 Z " fill="#145945" transform="translate(126,122)"/>
+				<path d="M0,0 L1,0 L1,17 L-3,18 L-1,15 L-1,2 Z " fill="#123833" transform="translate(103,123)"/>
+				<path d="M0,0 L1,0 L1,5 L-1,6 L-1,4 L-5,6 L-6,3 Z " fill="#17433a" transform="translate(103,118)"/>
+				<path d="M0,0 L3,2 L0,5 L-5,4 L-2,1 Z " fill="#1a6058" transform="translate(59,34)"/>
+				<path d="M0,0 L3,0 L3,3 L6,3 L5,6 L-2,2 Z " fill="#165850" transform="translate(36,120)"/>
+			</svg>
+        </div>
+        <div id="subtitle" style="font-size: 16px; color: #1b645b;">
+			Revenue Acceleration Tool
+        </div>
+    </div>
+    <div id="app" style="display: block;">
+		
+        <div id="sidebar">
+            <div id="sidebar-header">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: 40px; " viewbox="0 0 170 170">
+                    <path d="M0,0 L6,1 L32,16 L56,30 L59,32 L59,98 L46,106 L40,109 L39,43 L11,27 L3,22 L-2,24 L-25,37 L-35,43 L-36,109 L-51,101 L-55,98 L-55,32 L-38,22 L-14,8 Z " fill="#1b645b" transform="translate(83,20)"/>
+                    <path d="M0,0 L5,2 L19,10 L20,11 L20,33 L11,39 L2,44 L-3,42 L-17,34 L-18,33 L-18,11 L-5,3 Z " fill="#16554e" transform="translate(84,63)"/>
+                    <path d="M0,0 L1,0 L1,66 L-12,74 L-18,77 L-18,11 L-5,3 Z " fill="#154f4a" transform="translate(141,52)"/>
+                    <path d="M0,0 L11,6 L19,11 L19,77 L4,69 L0,66 Z " fill="#144c47" transform="translate(28,52)"/>
+                    <path d="M0,0 L12,6 L17,9 L23,8 L37,0 L38,0 L38,22 L25,30 L20,33 L15,31 L0,22 Z " fill="#194e49" transform="translate(66,118)"/>
+                    <path d="M0,0 L1,0 L1,22 L-12,30 L-18,32 L-18,11 L-9,5 Z " fill="#133d3a" transform="translate(103,118)"/>
+                    <path d="M0,0 L1,0 L1,22 L-8,28 L-18,33 L-18,11 L-5,3 Z " fill="#123a37" transform="translate(103,74)"/>
+                    <path d="M0,0 L5,2 L19,10 L18,13 L2,22 L-4,20 L-17,12 L-17,10 Z " fill="#1a6058" transform="translate(84,63)"/>
+                    <path d="M0,0 L2,1 L1,21 L-3,19 L-2,16 L-2,2 Z " fill="#1a5c54" transform="translate(84,128)"/>
+                    <path d="M0,0 L3,0 L3,3 L10,2 L11,9 L-2,2 Z " fill="#17664f" transform="translate(36,120)"/>
+                    <path d="M0,0 L6,1 L3,4 L-1,6 L-2,1 Z " fill="#145945" transform="translate(126,122)"/>
+                    <path d="M0,0 L1,0 L1,17 L-3,18 L-1,15 L-1,2 Z " fill="#123833" transform="translate(103,123)"/>
+                    <path d="M0,0 L1,0 L1,5 L-1,6 L-1,4 L-5,6 L-6,3 Z " fill="#17433a" transform="translate(103,118)"/>
+                    <path d="M0,0 L3,2 L0,5 L-5,4 L-2,1 Z " fill="#1a6058" transform="translate(59,34)"/>
+                    <path d="M0,0 L3,0 L3,3 L6,3 L5,6 L-2,2 Z " fill="#165850" transform="translate(36,120)"/>
+                  </svg>
+                <div id="sidebar-title">
+                    ACCELO
+                </div>
+            </div>
+            <div id="sidebar-navigation">
+                <div id="top-nav-items">
+                    <div class="nav-item active" data-panel="input">
+                        <div class="nav-item-svg">
+                            <svg viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M904.630857 240.054857c0.950857-9.435429-7.021714-19.382857-16.676571-24.283428L461.531429 2.633143a24.137143 24.137143 0 0 0-21.796572 0L13.531429 215.771429c-15.872 10.386286-13.385143 33.426286-13.385143 35.84V706.56c0 8.411429 4.388571 16.310857 11.702857 20.772571 0 0 417.060571 252.050286 424.228571 255.268572 14.628571 7.241143 23.844571 5.266286 30.72 1.755428L605.622857 904.045714c11.849143-6.948571 12.8-17.481143 11.264-35.693714-1.536-18.139429-17.408-28.013714-29.037714-21.284571-11.702857 6.656-103.497143 61.952-103.497143 61.952V493.568L852.114286 279.405714l38.692571-23.405714c7.68-4.973714 12.726857-11.337143 13.750857-15.945143z m-486.4 663.917714L63.780571 687.908571V290.230857L418.157714 493.714286v410.185143z m32.402286-476.525714L113.517714 236.324571 450.633143 67.876571l337.042286 168.448-337.042286 191.122286z m554.276571 335.872l-189.44 113.737143c-10.605714 7.387429-21.796571-0.877714-21.796571-0.877714-1.024-0.219429-188.635429-112.859429-188.635429-112.859429a18.139429 18.139429 0 0 1-8.850285-15.579428v-203.337143c0-6.582857 3.364571-18.066286 16.822857-23.259429l183.808-101.668571a18.870857 18.870857 0 0 1 16.091428 0l184.027429 101.668571h-1.462857c0.512 0 1.243429 0 1.755428 0.292572l4.754286 2.413714c5.997714 2.852571 11.556571 8.045714 11.556571 15.36v208.457143a18.432 18.432 0 0 1-8.630857 15.652571zM667.209143 540.818286l136.630857 76.726857 138.605714-76.726857L803.84 464.457143 667.209143 540.818286z m163.84 277.942857l139.702857-84.260572V582.802286l-139.702857 79.213714v156.672z m-49.517714-2.486857V662.747429l-136.996572-77.531429v148.48l136.996572 82.651429z" fill="#000000"></path></g></svg>
+                        </div>
+                        <div class="nav-item-title">
+                            Input
+                        </div>
+                    </div>
+                    <div class="nav-item " data-panel="xs-quant">
+                        <div class="nav-item-svg">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>currency-revenue-solid</title> <g id="Layer_2" data-name="Layer 2"> <g id="invisible_box" data-name="invisible box"> <rect width="48" height="48" fill="none"></rect> </g> <g id="Q3_icons" data-name="Q3 icons"> <path d="M44,7.1V14a2,2,0,0,1-2,2H35a2,2,0,0,1-2-2.3A2.1,2.1,0,0,1,35.1,12h2.3A18,18,0,0,0,6.1,22.2a2,2,0,0,1-2,1.8h0a2,2,0,0,1-2-2.2A22,22,0,0,1,40,8.9V7a2,2,0,0,1,2.3-2A2.1,2.1,0,0,1,44,7.1Z"></path> <path d="M4,40.9V34a2,2,0,0,1,2-2h7a2,2,0,0,1,2,2.3A2.1,2.1,0,0,1,12.9,36H10.6A18,18,0,0,0,41.9,25.8a2,2,0,0,1,2-1.8h0a2,2,0,0,1,2,2.2A22,22,0,0,1,8,39.1V41a2,2,0,0,1-2.3,2A2.1,2.1,0,0,1,4,40.9Z"></path> <path d="M24.7,22c-3.5-.7-3.5-1.3-3.5-1.8s.2-.6.5-.9a3.4,3.4,0,0,1,1.8-.4,6.3,6.3,0,0,1,3.3.9,1.8,1.8,0,0,0,2.7-.5,1.9,1.9,0,0,0-.4-2.8A9.1,9.1,0,0,0,26,15.3V13a2,2,0,0,0-4,0v2.2c-3,.5-5,2.5-5,5.2s3.3,4.9,6.5,5.5,3.3,1.3,3.3,1.8-1.1,1.4-2.5,1.4h0a6.7,6.7,0,0,1-4.1-1.3,2,2,0,0,0-2.8.6,1.8,1.8,0,0,0,.3,2.6A10.9,10.9,0,0,0,22,32.8V35a2,2,0,0,0,4,0V32.8a6.3,6.3,0,0,0,3-1.3,4.9,4.9,0,0,0,2-4h0C31,23.8,27.6,22.6,24.7,22Z"></path> </g> </g> </g></svg>
+                        </div>
+                        <div class="nav-item-title" style="margin-top: 2px;">
+                            Expansion
+                        </div>
+                    </div>
+                    <!-- <div class="nav-item " data-panel="customer-score">
+                        <div class="nav-item-svg">
+                            <svg viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M905.92 237.76a32 32 0 0 0-52.48 36.48A416 416 0 1 1 96 512a418.56 418.56 0 0 1 297.28-398.72 32 32 0 1 0-18.24-61.44A480 480 0 1 0 992 512a477.12 477.12 0 0 0-86.08-274.24z" fill="#231815"></path><path d="M630.72 113.28A413.76 413.76 0 0 1 768 185.28a32 32 0 0 0 39.68-50.24 476.8 476.8 0 0 0-160-83.2 32 32 0 0 0-18.24 61.44zM489.28 86.72a36.8 36.8 0 0 0 10.56 6.72 30.08 30.08 0 0 0 24.32 0 37.12 37.12 0 0 0 10.56-6.72A32 32 0 0 0 544 64a33.6 33.6 0 0 0-9.28-22.72A32 32 0 0 0 505.6 32a20.8 20.8 0 0 0-5.76 1.92 23.68 23.68 0 0 0-5.76 2.88l-4.8 3.84a32 32 0 0 0-6.72 10.56A32 32 0 0 0 480 64a32 32 0 0 0 2.56 12.16 37.12 37.12 0 0 0 6.72 10.56zM355.84 313.6a36.8 36.8 0 0 0-13.12 18.56l-107.52 312.96a37.44 37.44 0 0 0 2.56 35.52 32 32 0 0 0 24.96 10.56 27.84 27.84 0 0 0 17.28-5.76 43.84 43.84 0 0 0 10.56-13.44 100.16 100.16 0 0 0 7.04-15.36l4.8-12.8 17.6-49.92h118.72l24.96 69.76a45.76 45.76 0 0 0 10.88 19.2 28.8 28.8 0 0 0 20.48 8.32h2.24a27.52 27.52 0 0 0 27.84-15.68 41.28 41.28 0 0 0 0-29.44l-107.84-313.6a36.8 36.8 0 0 0-13.44-19.2 44.16 44.16 0 0 0-48 0.32z m24.32 96l41.6 125.44h-83.2zM594.88 544a66.56 66.56 0 0 0 25.6 4.16h62.4v78.72a29.12 29.12 0 0 0 32 32 26.24 26.24 0 0 0 27.2-16.32 73.28 73.28 0 0 0 4.16-26.24v-66.88h73.6a27.84 27.84 0 0 0 29.44-32 26.56 26.56 0 0 0-16-27.2 64 64 0 0 0-23.04-4.16h-64v-75.84a28.16 28.16 0 0 0-32-30.08 26.56 26.56 0 0 0-27.2 15.68 64 64 0 0 0-4.16 24v66.88h-62.72a69.44 69.44 0 0 0-25.6 4.16 26.56 26.56 0 0 0-15.68 27.2 25.92 25.92 0 0 0 16 25.92z" fill="#231815"></path></g></svg>
+                        </div>
+                        <div class="nav-item-title" style="margin-top: 2px;">
+                            Customer Score
+                        </div>
+                    </div> -->
+                    <div class="nav-item " data-panel="price-uplift">
+                        <div class="nav-item-svg">
+                            <svg fill="#000000" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1070.45 53.9152C1104.97 88.4365 1124.36 135.258 1124.36 184.078L1123.51 1188.09C1123.74 1229.1 1110.25 1269.01 1085.18 1301.47 1060.11 1333.93 1024.9 1357.08 985.16 1367.22 945.419 1377.35 903.428 1373.91 865.87 1357.43 828.312 1340.95 797.346 1312.38 777.899 1276.28 763.314 1249.19 755.85 1218.85 756.21 1188.09V184.078C756.21 135.258 775.603 88.4365 810.124 53.9152 844.646 19.3939 891.467 0 940.288 0 989.108 0 1035.93 19.3939 1070.45 53.9152ZM161.091 1320.33C194.624 1353.7 240.009 1372.44 287.319 1372.44 310.767 1372.44 333.985 1367.81 355.644 1358.83 377.304 1349.85 396.98 1336.69 413.547 1320.1 430.113 1303.5 443.246 1283.8 452.193 1262.13 461.141 1240.45 465.726 1217.23 465.689 1193.78L463.406 359.01 106.666 741.15 108.378 1194.35C108.605 1241.67 127.558 1286.96 161.091 1320.33ZM1592.41 1372.44C1639.74 1372.51 1685.17 1353.81 1718.72 1320.42 1752.27 1287.02 1771.2 1241.69 1771.35 1194.35L1773.06 741.15 1416.33 359.01 1414.32 1193.78C1414.29 1217.21 1418.87 1240.41 1427.79 1262.06 1436.72 1283.71 1449.83 1303.41 1466.37 1319.99 1482.9 1336.58 1502.55 1349.75 1524.17 1358.75 1545.8 1367.75 1568.99 1372.4 1592.41 1372.44ZM1123.46 1752.39C1126.77 1716.09 1119.25 1679.61 1101.83 1647.56 1090.29 1626.27 1074.66 1607.47 1055.85 1592.22 1037.03 1576.97 1015.39 1565.59 992.163 1558.73 968.939 1551.86 944.588 1549.64 920.506 1552.2 896.423 1554.76 873.083 1562.05 851.822 1573.65 819.782 1591.06 793.627 1617.59 776.661 1649.87 759.697 1682.14 752.685 1718.73 756.513 1754.99 760.341 1791.25 774.837 1825.57 798.168 1853.59 821.499 1881.62 852.616 1902.09 887.585 1912.44 922.554 1922.77 959.804 1922.51 994.623 1911.68 1029.44 1900.84 1060.27 1879.94 1083.2 1851.58 1106.13 1823.23 1120.14 1788.71 1123.46 1752.39Z"></path> </g></svg>
+                        </div>
+                        <div class="nav-item-title" style="margin-top: 2px;">
+                            Price Uplift
+                        </div>
+                    </div>
+
+
+                    <div class="nav-item " data-panel="fact-pack">
+                        <div class="nav-item-svg">
+                            <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 122.25" style="enable-background:new 0 0 122.88 122.25" xml:space="preserve"><g><path d="M122.57,29.25l0.31,62.88c0.01,3.28-2.05,6.1-5,7.29l0.01,0.01l-54.64,22.09c-0.99,0.4-2.05,0.6-3.12,0.6 c-0.11,0-0.22,0-0.33-0.01c-0.47,0.08-0.95,0.13-1.42,0.13c-1.06,0-2.11-0.21-3.08-0.62L4.94,100.46l0-0.01 C2.03,99.22-0.01,96.32,0,92.94l0.3-62.08c-0.04-0.66,0-1.33,0.12-1.99c0.02-0.95,0.22-1.88,0.58-2.76 c0.84-2.04,2.47-3.55,4.42-4.33l0-0.01L57.98,0.6c2.14-0.86,4.44-0.77,6.4,0.07l52.47,18.97c3.14,1.13,5.13,3.96,5.27,7.01 C122.41,27.49,122.57,28.37,122.57,29.25L122.57,29.25z M51.51,108.46l0.39-54.77L9.82,35.5L8.93,90.49L51.51,108.46L51.51,108.46 L51.51,108.46z M113.58,35.5L66.55,53.7l0.37,54.71l46.94-17.54L113.58,35.5L113.58,35.5L113.58,35.5z"/></g></svg>
+                        </div>
+                        <div class="nav-item-title">
+                            Fact Pack
+                        </div>
+                    </div>
+                    <div class="nav-item " data-panel="segmentation">
+                        <div class="nav-item-svg">
+                            <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 120.5" style="enable-background:new 0 0 122.88 120.5" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M64.82,68.27l48.4,0.8c0,17.19-8.55,33.26-22.81,42.86L64.82,68.27L64.82,68.27z M59.99,59.92L59.44,3.63 L59.41,0l3.61,0.25h0.01h0.01c4.56,0.32,8.98,1.12,13.21,2.33c4.23,1.21,8.29,2.86,12.13,4.87c19.67,10.34,33.27,30.56,34.34,54.02 l0.16,3.61l-3.61-0.11l-56.02-1.72l-3.23-0.1L59.99,59.92L59.99,59.92z M66.19,7.33l0.48,49.31l49.06,1.5 c-2.1-19.45-13.88-36.02-30.48-44.74c-3.41-1.79-7.04-3.26-10.84-4.35C71.74,8.28,69,7.71,66.19,7.33L66.19,7.33z M55.19,65.31 l27.6,47.8c-8.38,4.84-17.92,7.39-27.6,7.39C24.71,120.5,0,95.78,0,65.31c0-29.57,23.31-53.9,52.86-55.14L55.19,65.31L55.19,65.31z"/></g></svg>
+                        </div>
+                        <div class="nav-item-title">
+                            Segment-ation
+                        </div>
+                    </div> 
+                    <div class="nav-item" data-panel="revenue-war-room">
+                        <div class="nav-item-svg"> 
+                            <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.8 122.88" style="enable-background:new 0 0 122.8 122.88" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M106.61,30.09C114.76,18.75,122.02,7.84,122.8,0c-9.36,1.3-19.38,9.17-29.8,16.1L74.22,30.72 c3.14,0.02,6.07,0.69,8.64,1.89c2.06,0.97,3.88,2.27,5.38,3.87c1.51,1.6,2.7,3.49,3.49,5.6c0.6,1.61,0.96,3.34,1.05,5.17 L106.61,30.09L106.61,30.09z M46.78,20.49l2.89,2.89l-4.64,4.64l-4.4-1.38L46.78,20.49L46.78,20.49z M41.1,15.08l2.89,2.89 l-7.95,7.95l-4.4-1.38L41.1,15.08L41.1,15.08z M102.12,75.83L99.29,73l-4.64,4.64l1.32,4.34L102.12,75.83L102.12,75.83z M107.53,81.51l-2.83-2.83l-7.95,7.95l1.32,4.34L107.53,81.51L107.53,81.51z M69.25,34.58l-1.47,1.14l-1.32-0.28 c-0.48,0.12-1,0-1.41-0.3l-42.43-9.06l-11.4,11.4l28.39,28.39l-0.1,2.14l-2.97,2.97l6.22,9.46l9.11,5.83l3.1-3.1l1.74,0.1 l28.56,28.56l11.54-11.54L86.74,54.72l2.35-2.91c0.77-3.3,0.57-6.31-0.38-8.87c-0.61-1.65-1.54-3.13-2.72-4.37 c-1.19-1.26-2.63-2.3-4.27-3.07C78.25,33.87,73.9,33.43,69.25,34.58L69.25,34.58z M34.32,73.2l-3.16,3.16l-23.38-2.8L0,81.34 l41.54,41.54l7.83-7.83l-2.8-23.48l3.08-3.08l-8.82-5.64c-0.22-0.14-0.39-0.33-0.51-0.54L34.32,73.2L34.32,73.2z"/></g></svg>                        </div>
+                        <div class="nav-item-title">
+                            Revenue War Room
+                        </div>
+                    </div>
+                </div>
+                <div id="bottom-nav-items">
+                    <div class="nav-item" data-panel="account">
+                        <div class="nav-item-svg">
+                            <svg viewBox="0 0 32 32" enable-background="new 0 0 32 32" id="Layer_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="profile_x2C__person"> <g> <g> <g> <path d="M16,31C7.729,31,1,24.271,1,16S7.729,1,16,1s15,6.729,15,15S24.271,31,16,31z M16,2C8.28,2,2,8.28,2,16 s6.28,14,14,14s14-6.28,14-14S23.72,2,16,2z" fill="#263238"></path> </g> </g> </g> <g> <g id="team_3_"> <g> <g> <g> <g> <path d="M23.64,20.713l-4.762-1.652l-0.323-2.584c-0.215,0.307-0.523,0.546-0.924,0.671l0.293,2.345 c0.023,0.189,0.152,0.349,0.332,0.41l5.055,1.756c0.9,0.314,1.689,1.427,1.689,2.381v-0.007c0,0.276,0.224,0.5,0.5,0.5 c0.275,0,0.499-0.223,0.5-0.498C25.997,22.656,24.94,21.168,23.64,20.713z" fill="#263238"></path> </g> </g> </g> </g> <g> <g> <g> <g> <g> <path d="M6.5,24.532c-0.276,0-0.5-0.224-0.5-0.5v0.007c0-1.379,1.059-2.871,2.359-3.326l4.762-1.641 l0.012-0.28c0.034-0.274,0.289-0.465,0.559-0.434c0.273,0.034,0.468,0.284,0.434,0.559l-0.051,0.589 c-0.023,0.189-0.153,0.348-0.333,0.41l-5.054,1.742C7.789,21.973,7,23.086,7,24.039v-0.007C7,24.309,6.776,24.532,6.5,24.532 z" fill="#263238"></path> </g> </g> </g> </g> <g> <g> <g> <g> <g> <path d="M16,18.039c-2.779,0-4.192-1.844-4.201-6.469c-0.002-1.174,0.123-2.363,1.227-3.469 C13.729,7.396,14.729,7.039,16,7.039s2.271,0.357,2.975,1.063c1.104,1.105,1.229,2.295,1.227,3.469 C20.192,16.195,18.779,18.039,16,18.039z M16,8.039c-1.009,0-1.75,0.252-2.267,0.769c-0.632,0.633-0.938,1.2-0.935,2.761 c0.008,4.018,1.055,5.471,3.201,5.471s3.193-1.453,3.201-5.471c0.003-1.561-0.303-2.128-0.935-2.761 C17.75,8.291,17.009,8.039,16,8.039z" fill="#263238"></path> </g> </g> </g> </g> </g> </g> </g> </g> </g> </g></svg>
+                        </div>
+                        <div class="nav-item-title">
+                            Account
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="controls" style="display:flex; justify-content: space-between; align-items: center; flex-direction: column; padding: 4px; border-radius: 5px; width: 255px; margin-bottom: 10px;">
+                <div id="top-controls" style="width: 100%;">
+                    <div class="controls-group hidden" data-panel="xs-quant,input,price-uplift,segmentation,fact-pack,revenue-war-room" data-view="controls">
+                        <div class="model-parameter-header">
+                            Controls
+                        </div>
+                        <div class="model-parameter-group">
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    View
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select id="active-view-selector">
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Export
+                                </div>
+                                <div class="model-parameter-input">
+                                    <svg viewBox="-4.41 -4.41 29.82 29.82" class="model-parameter-svg" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>save_item [#1411]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-419.000000, -640.000000)" fill="#000000"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M370.21875,484 C370.21875,483.448 370.68915,483 371.26875,483 C371.84835,483 372.31875,483.448 372.31875,484 C372.31875,484.552 371.84835,485 371.26875,485 C370.68915,485 370.21875,484.552 370.21875,484 L370.21875,484 Z M381.9,497 C381.9,497.552 381.4296,498 380.85,498 L379.8,498 L379.8,494 C379.8,492.895 378.86025,492 377.7,492 L369.3,492 C368.13975,492 367.2,492.895 367.2,494 L367.2,498 L366.15,498 C365.5704,498 365.1,497.552 365.1,497 L365.1,487.044 C365.1,486.911 365.15565,486.784 365.2533,486.691 L367.2,484.837 L367.2,486 C367.2,487.105 368.13975,488 369.3,488 L377.7,488 C378.86025,488 379.8,487.105 379.8,486 L379.8,482 L380.85,482 C381.4296,482 381.9,482.448 381.9,483 L381.9,497 Z M377.7,498 L369.3,498 L369.3,495 C369.3,494.448 369.7704,494 370.35,494 L376.65,494 C377.2296,494 377.7,494.448 377.7,495 L377.7,498 Z M369.3,482.837 L370.17885,482 L377.7,482 L377.7,485 C377.7,485.552 377.2296,486 376.65,486 L370.35,486 C369.7704,486 369.3,485.552 369.3,485 L369.3,482.837 Z M381.9,480 L369.7347,480 C369.45645,480 369.18975,480.105 368.99235,480.293 L363.30765,485.707 C363.11025,485.895 363,486.149 363,486.414 L363,498 C363,499.105 363.93975,500 365.1,500 L381.9,500 C383.06025,500 384,499.105 384,498 L384,482 C384,480.895 383.06025,480 381.9,480 L381.9,480 Z" id="save_item-[#1411]"> </path> </g> </g> </g> </g></svg>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="controls-group hidden" data-panel="input" data-view="input-actions">
+                        <div class="model-parameter-header">
+                            Input Actions
+                        </div>
+                        <div class="model-parameter-group">
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Download Template
+                                </div>
+                                <div class="model-parameter-input">
+                                    <svg class="model-parameter-svg" id="download-template" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12ZM12 6.25C12.4142 6.25 12.75 6.58579 12.75 7V12.1893L14.4697 10.4697C14.7626 10.1768 15.2374 10.1768 15.5303 10.4697C15.8232 10.7626 15.8232 11.2374 15.5303 11.5303L12.5303 14.5303C12.3897 14.671 12.1989 14.75 12 14.75C11.8011 14.75 11.6103 14.671 11.4697 14.5303L8.46967 11.5303C8.17678 11.2374 8.17678 10.7626 8.46967 10.4697C8.76256 10.1768 9.23744 10.1768 9.53033 10.4697L11.25 12.1893V7C11.25 6.58579 11.5858 6.25 12 6.25ZM8 16.25C7.58579 16.25 7.25 16.5858 7.25 17C7.25 17.4142 7.58579 17.75 8 17.75H16C16.4142 17.75 16.75 17.4142 16.75 17C16.75 16.5858 16.4142 16.25 16 16.25H8Z" fill="#1C274C"></path> </g></svg>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Upload Data
+                                </div>
+                                <div class="model-parameter-input">
+                                    <svg class="model-parameter-svg" id="upload-input" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12ZM12 17.75C12.4142 17.75 12.75 17.4142 12.75 17V11.8107L14.4697 13.5303C14.7626 13.8232 15.2374 13.8232 15.5303 13.5303C15.8232 13.2374 15.8232 12.7626 15.5303 12.4697L12.5303 9.46967C12.3897 9.32902 12.1989 9.25 12 9.25C11.8011 9.25 11.6103 9.32902 11.4697 9.46967L8.46967 12.4697C8.17678 12.7626 8.17678 13.2374 8.46967 13.5303C8.76256 13.8232 9.23744 13.8232 9.53033 13.5303L11.25 11.8107V17C11.25 17.4142 11.5858 17.75 12 17.75ZM8 7.75C7.58579 7.75 7.25 7.41421 7.25 7C7.25 6.58579 7.58579 6.25 8 6.25H16C16.4142 6.25 16.75 6.58579 16.75 7C16.75 7.41421 16.4142 7.75 16 7.75H8Z" fill="#1C274C"></path> </g></svg>
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+
+                    <div class="controls-group hidden" data-panel="input" data-view="input-actions">
+                        <div class="model-parameter-header">
+                            Data Filter
+                        </div>
+                        <div class="model-parameter-group">
+                            <div id="builder"></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                <div></div>
+                                <div style="margin-right: 2px;">
+                                    <button class="btn btn-success" id="btn-set">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controls-group hidden" data-panel="xs-quant,fact-pack,price-uplift" data-view="model-parameters">
+                        <div class="model-parameter-header">
+                            Model Parameters
+                        </div>
+                        <div class="model-parameter-group">
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Cutoff Date
+                                </div>
+                                <div class="model-parameter-input">
+                                    <input type="date" id="cutoff-date" value="2021-12-31" style="color-scheme: dark;">
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Breakdown Var
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select name="breakdown-variable" id="breakdown-variable">
+                                        <option value="Product Super Family">Super Family</option>
+                                        <option value="Product Family">Product Family</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Aggregation Variable
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select name="aggregation-variable" id="aggregation-variable">
+                                        <option value="REVENUE">Revenue</option>
+                                        <option value="SPEND">Spend</option>
+                                        <option value="AVERAGE">Rev/Spend Avg.</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Min Sample Size
+                                </div>
+                                <div class="model-parameter-input">
+                                    <input type="number" id="minimum-sample-size" value="41" min="0" max="100" step="1">
+                                </div>
+                            </div>
+        
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Percentile
+                                </div>
+                                <div class="model-parameter-input">
+                                    <input type="number" id="percentile" value="0.75" min="0" max="1" step="0.01">
+                                </div>
+                            </div>
+        
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Cohort Variables
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select name="cohort-vars" id="cohort-vars" multiple>
+                                        <option value="Common Industry">Industry</option>
+                                        <option value="Common Geo">Geo</option>
+                                        <option value="Segment">Segment</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Subscription Products
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select name="subscription-products" id="subscription-products" multiple>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Perpetual Products
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select name="perpetual-products" id="perpetual-products" multiple>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls-group hidden" data-panel="xs-quant" data-view="buckets">
+                        <div class="model-parameter-header">
+                            Buckets
+                        </div>
+                        <div class="model-parameter-group">
+                            <div class="model-parameter" style="display:flex; flex-direction: column; align-items: flex-start;">
+                                <div class="model-parameter-label">
+                                    Revenue Bucket Thresholds
+                                </div>
+                                <div class="model-parameter-input" style="width: 100% !important;">
+                                    <input type="text" id="revenue-buckets" value="" style="font-weight:bold;">
+                                </div>
+                            </div>
+                            <div class="model-parameter" style="display:flex; flex-direction: column; align-items: flex-start;">
+                                <div class="model-parameter-label">
+                                    Spend Bucket Thresholds
+                                </div>
+                                <div class="model-parameter-input" style="width: 100% !important;">
+                                    <input type="text" id="spend-buckets" value="" style="font-weight:bold;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls-group hidden" data-panel="xs-quant" data-view="cohort-filters">
+                        <div class="model-parameter-header">
+                            Cohort Filters
+                         </div>
+                         <div class="model-parameter-group">
+                             <div class="model-parameter">
+                                 <div class="model-parameter-label">
+                                     Industry
+                                 </div>
+                                 <div class="model-parameter-input">
+                                     <select id="industry" value="Filter">
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="model-parameter">
+                                 <div class="model-parameter-label">
+                                     Region
+                                 </div>
+                                 <div class="model-parameter-input">
+                                     <select id="region" value="Filter">
+                                     </select>
+                                 </div>
+                             </div>
+                             <div class="model-parameter">
+                                 <div class="model-parameter-label">
+                                     Segment
+                                 </div>
+                                 <div class="model-parameter-input">
+                                     <select id="segment" value="Filter">
+                                     </select>
+                                 </div>
+                             </div>
+                         </div>
+                    </div>
+
+                    <div class="controls-group hidden" data-panel="account" data-view="input-actions">
+                        <div class="model-parameter-header">
+                            Project Settings
+                        </div>
+                        <div class="model-parameter-group" style="margin-bottom: 0px;">
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Project
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select id="active-project-name">
+                                    </select>
+                                    <svg viewBox="0 0 24 24" class="model-parameter-svg" id="add-project"  fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="24" height="24" fill="white"></rect> <path fill-rule="evenodd" clip-rule="evenodd" d="M13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9V11H9C8.44772 11 8 11.4477 8 12C8 12.5523 8.44772 13 9 13H11V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V13H15C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11H13V9ZM7.25007 2.38782C8.54878 2.0992 10.1243 2 12 2C13.8757 2 15.4512 2.0992 16.7499 2.38782C18.06 2.67897 19.1488 3.176 19.9864 4.01358C20.824 4.85116 21.321 5.94002 21.6122 7.25007C21.9008 8.54878 22 10.1243 22 12C22 13.8757 21.9008 15.4512 21.6122 16.7499C21.321 18.06 20.824 19.1488 19.9864 19.9864C19.1488 20.824 18.06 21.321 16.7499 21.6122C15.4512 21.9008 13.8757 22 12 22C10.1243 22 8.54878 21.9008 7.25007 21.6122C5.94002 21.321 4.85116 20.824 4.01358 19.9864C3.176 19.1488 2.67897 18.06 2.38782 16.7499C2.0992 15.4512 2 13.8757 2 12C2 10.1243 2.0992 8.54878 2.38782 7.25007C2.67897 5.94002 3.176 4.85116 4.01358 4.01358C4.85116 3.176 5.94002 2.67897 7.25007 2.38782Z" fill="#323232"></path> </g></svg>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Version
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select id="active-version-name">
+                                    </select>
+                                    <svg viewBox="0 0 24 24" class="model-parameter-svg" id="add-version"  fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="24" height="24" fill="white"></rect> <path fill-rule="evenodd" clip-rule="evenodd" d="M13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9V11H9C8.44772 11 8 11.4477 8 12C8 12.5523 8.44772 13 9 13H11V15C11 15.5523 11.4477 16 12 16C12.5523 16 13 15.5523 13 15V13H15C15.5523 13 16 12.5523 16 12C16 11.4477 15.5523 11 15 11H13V9ZM7.25007 2.38782C8.54878 2.0992 10.1243 2 12 2C13.8757 2 15.4512 2.0992 16.7499 2.38782C18.06 2.67897 19.1488 3.176 19.9864 4.01358C20.824 4.85116 21.321 5.94002 21.6122 7.25007C21.9008 8.54878 22 10.1243 22 12C22 13.8757 21.9008 15.4512 21.6122 16.7499C21.321 18.06 20.824 19.1488 19.9864 19.9864C19.1488 20.824 18.06 21.321 16.7499 21.6122C15.4512 21.9008 13.8757 22 12 22C10.1243 22 8.54878 21.9008 7.25007 21.6122C5.94002 21.321 4.85116 20.824 4.01358 19.9864C3.176 19.1488 2.67897 18.06 2.38782 16.7499C2.0992 15.4512 2 13.8757 2 12C2 10.1243 2.0992 8.54878 2.38782 7.25007C2.67897 5.94002 3.176 4.85116 4.01358 4.01358C4.85116 3.176 5.94002 2.67897 7.25007 2.38782Z" fill="#323232"></path> </g></svg>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Access
+                                </div>
+                                <div class="model-parameter-input">
+                                    <select id="active-project-users" multiple>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="model-parameter">
+                                <div class="model-parameter-label">
+                                    Logout
+                                </div>
+                                <div class="model-parameter-input">
+                                    <svg viewBox="0 0 24 24" onclick="window.location.href='./logout';" class="model-parameter-svg" id="logout" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.5 9.56757V14.4324C3.5 16.7258 3.5 17.8724 4.22161 18.5849C4.87719 19.2321 5.89578 19.2913 7.81846 19.2968C7.71686 18.6224 7.69563 17.8168 7.69029 16.8689C7.68802 16.4659 8.01709 16.1374 8.42529 16.1351C8.83348 16.1329 9.16624 16.4578 9.16851 16.8608C9.17451 17.9247 9.20249 18.6789 9.30898 19.2512C9.41158 19.8027 9.57634 20.1219 9.81626 20.3588C10.089 20.6281 10.4719 20.8037 11.1951 20.8996C11.9395 20.9985 12.9261 21 14.3407 21H15.3262C16.7407 21 17.7273 20.9985 18.4717 20.8996C19.1949 20.8037 19.5778 20.6281 19.8505 20.3588C20.1233 20.0895 20.3011 19.7114 20.3983 18.9975C20.4984 18.2626 20.5 17.2885 20.5 15.8919V8.10811C20.5 6.71149 20.4984 5.73743 20.3983 5.0025C20.3011 4.28855 20.1233 3.91048 19.8505 3.6412C19.5778 3.37192 19.1949 3.19635 18.4717 3.10036C17.7273 3.00155 16.7407 3 15.3262 3H14.3407C12.9261 3 11.9395 3.00155 11.1951 3.10036C10.4719 3.19635 10.089 3.37192 9.81626 3.6412C9.57634 3.87807 9.41158 4.19728 9.30898 4.74877C9.20249 5.32112 9.17451 6.07525 9.16851 7.1392C9.16624 7.54221 8.83348 7.8671 8.42529 7.86485C8.01709 7.86261 7.68802 7.53409 7.69029 7.13107C7.69563 6.18322 7.71686 5.37758 7.81846 4.70325C5.89578 4.70867 4.87719 4.76789 4.22161 5.41515C3.5 6.12759 3.5 7.27425 3.5 9.56757ZM5.93385 12.516C5.6452 12.231 5.6452 11.769 5.93385 11.484L7.90484 9.53806C8.19348 9.25308 8.66147 9.25308 8.95011 9.53806C9.23876 9.82304 9.23876 10.2851 8.95011 10.5701L8.24088 11.2703L15.3259 11.2703C15.7341 11.2703 16.0651 11.597 16.0651 12C16.0651 12.403 15.7341 12.7297 15.3259 12.7297L8.24088 12.7297L8.95011 13.4299C9.23876 13.7149 9.23876 14.177 8.95011 14.4619C8.66147 14.7469 8.19348 14.7469 7.90484 14.4619L5.93385 12.516Z" fill="#1C274C"></path> </g></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls-group hidden" data-panel="segmentation" data-view="ai-assistant">
+                        <div class="model-parameter-header">
+                            AI Assistant
+                        </div>
+                        <div class="model-parameter-group">
+                            <div class="model-parameter" style="position: relative; display: flex; flex-direction: column; align-items: flex-start;">
+                                <div class="ai-assistant-message-container" style="width: 100%; display: flex; flex-direction: row; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                                    <img src="/assets/img/logo.png" alt="AI Assistant" style="width: 20px; height: 20px;">
+                                    <div id="ai-assistant-message" contenteditable="false" style="width: 100%; height: 100%; line-height: 1.5;">
+                                       Please give me a detailed instructions to create your segmentation
+                                    </div>
+                                </div>
+                                <!-- <div style="width: 100%; display: flex; flex-direction: column; align-items: flex-end; margin-bottom: 10px;">
+                                    <div class="ai-assistant-user-message-container">
+                                        <div id="ai-assistant-user-message" contenteditable="false" style="width: 100%; height: 100%; line-height: 1.5;">
+                                           Something here or there lorem ipsum dolor sit amet
+                                           Something here or there lorem ipsum dolor sit amet
+                                           Something here or there lorem ipsum dolor sit amet
+                                           Something here or there lorem ipsum dolor sit amet
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div contenteditable id="ai-assistant-input" style="height: 100%;" placeholder="Give detailed instructions to create your segmentation"></div>
+                                <div id="send-message" style="position:absolute; bottom: 10px; right: 10px; background-color: white; border-radius: 5px; width:20px; height:20px;">
+                                    <svg id="send-message-svg" width="20px" height="20px" viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg" class="icon-2xl"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.1918 8.90615C15.6381 8.45983 16.3618 8.45983 16.8081 8.90615L21.9509 14.049C22.3972 14.4953 22.3972 15.2189 21.9509 15.6652C21.5046 16.1116 20.781 16.1116 20.3347 15.6652L17.1428 12.4734V22.2857C17.1428 22.9169 16.6311 23.4286 15.9999 23.4286C15.3688 23.4286 14.8571 22.9169 14.8571 22.2857V12.4734L11.6652 15.6652C11.2189 16.1116 10.4953 16.1116 10.049 15.6652C9.60265 15.2189 9.60265 14.4953 10.049 14.049L15.1918 8.90615Z" fill="currentColor"></path></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        <div id="panels">
+            <div class="panel hidden" data-panel="input">
+                <div class="panel-content">
+                    <div id="input-sales-data" class="view-container hidden">
+                        <div id="sales-data" class="ag-grid" style="width: calc(100% -  180px); height: 100%; overflow: hidden;"></div>
+                        <div id="sales-data-kpis-content" class="kpis-content">
+                        </div>
+                    </div>
+                    <div id="input-product-lookup" class="view-container hidden">
+                        <div id="product-lookup" class="ag-grid" style="width: calc(100% -  180px); height: 100%; overflow: hidden;"></div>
+                        <div id="product-lookup-kpis-content" class="kpis-content">
+                        </div>
+                    </div>
+                    <div id="input-industry-lookup" class="view-container hidden">
+                        <div id="industry-lookup" class="ag-grid" style="width: calc(100% -  180px); height: 100%; overflow: hidden;"></div>
+                        <div id="industry-lookup-kpis-content" class="kpis-content">
+                        </div>
+                    </div>
+                    <div id="input-geo-lookup" class="view-container hidden">
+                        <div id="geo-lookup" class="ag-grid" style="width: calc(100% -  180px); height: 100%; overflow: hidden;"></div>
+                        <div id="geo-lookup-kpis-content" class="kpis-content">
+                        </div>
+                    </div>
+                    <div id="input-customer-lookup" class="view-container hidden">
+                        <div id="customer-lookup" class="ag-grid" style="width: calc(100% -  180px); height: 100%; overflow: hidden;"></div>
+                        <div id="customer-lookup-kpis-content" class="kpis-content">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel hidden" data-panel="xs-quant">
+                <div class="panel-content">
+                    <div id="xs-quant-accounts" class="view-container hidden">
+                        <div id="accounts" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                    <div id="xs-quant-deal-size" class="view-container hidden">
+                        <div id="deal-size" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                    <div id="xs-quant-cohorts" class="view-container hidden"  >
+                        <div id="cohorts" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                    <div id="xs-quant-opportunities" class="view-container hidden">
+                        <div id="opportunities" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                    <div id="xs-quant-cross-sell" class="view-container hidden">
+                        <div id="cross-sell" style="width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden;">
+                            <div style="width: 100%; height: 60%; display: flex; flex-direction: row; overflow: hidden;">
+                                <div id="cross-sell-grid" class="ag-grid" style="width: 60%; height: 100%;"></div>
+                                <div id="cross-sell-heatmap-chart" style="width: 40%; height: 100%;"></div>
+                            </div>
+                            <div style="width: 100%; height: 40%; display: flex; flex-direction: row; width: 100%;">
+                                <div id="cross-sell-chart1" style="width: 33%; height: 100%;"></div>
+                                <div id="cross-sell-chart2" style="width: 33%; height: 100%;"></div>
+                                <div id="cross-sell-chart3" style="width: 33%; height: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="xs-quant-up-sell" class="view-container hidden">
+                        <div id="up-sell" style="width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden;">
+                            <div style="width: 100%; height: 60%; display: flex; flex-direction: row; overflow: hidden;">
+                                <div id="up-sell-grid" class="ag-grid" style="width: 60%; height: 100%;"></div>
+                                <div id="up-sell-heatmap-chart" style="width: 40%; height: 100%;"></div>
+                            </div>
+                            <div style="width: 100%; height: 40%; display: flex; flex-direction: row; width: 100%;">
+                                <div id="up-sell-chart1" style="width: 33%; height: 100%;"></div>
+                                <div id="up-sell-chart2" style="width: 33%; height: 100%;"></div>
+                                <div id="up-sell-chart3" style="width: 33%; height: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel hidden" data-panel="price-uplift">
+                <div class="panel-content">
+                    <div id="price-uplift-asp-build" class="view-container hidden">
+                        <div style="width: 50%; height: 100%;">
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_11" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_21" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_31" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_41" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                        </div>
+                        <div style="width: 50%; height: 100%;">
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_12" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_22" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_32" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                            <div style="height: 25%; width: 100%;">
+                                <canvas id="asp_chartjs_42" style="height:100%; width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="price-uplift-customer-non-sku" class="view-container hidden">
+                        <div id="customer-non-sku" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel hidden" data-panel="fact-pack">
+                <div class="panel-content">
+                    <div id="fact-pack-data-cube" class="view-container hidden">
+                        <div id="data-cube" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;">
+                        </div>
+                    </div>
+                    <div id="fact-pack-arrs" class="view-container hidden">
+                        <div id="arrs"style="width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: row;">
+                            <div id="arrs-grid" style="width: 50%; height: 100%;"></div>
+                            <div id="arrs-chart" style="width: 50%; height: 100%;"></div>
+                        </div>
+                    </div>
+                    <div id="fact-pack-pareto-analysis" class="view-container hidden">
+                        <div id="pareto-analysis" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden; display: flex; flex-direction: row;">
+                            <div id="pareto-analysis-grid" style="width: 60%; height: 100%;"></div>
+                            <div style="width: 40%; height: 100%; display: flex; flex-direction: column;">
+                                <div id="pareto-analysis-chart-container" style="width: calc(100% - 40px); height: calc(50% - 40px); padding: 20px;">
+                                    <canvas id="pareto-analysis-chart" style="width: 100%; height: 100%;"></canvas>
+                                </div>
+                                <div id="pareto-analysis-dist-grid" style="width: 100%; height: 50%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="fact-pack-attach-rates" class="view-container hidden">
+                        <div id="attach-rates" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                    <div id="fact-pack-bundling" class="view-container hidden">
+                        <div id="bundling" class="ag-grid" style="width: 100%; height: 100%; overflow: hidden;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel hidden" data-panel="segmentation">
+                <div class="panel-content">
+                    <div id="segmentation-clustering" class="view-container hidden">
+                        <div id="clustering-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                    <div id="segmentation-model-integration" class="view-container hidden">
+                        <div id="model-integration-chart" style="width: 100%; height: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel hidden" data-panel="revenue-war-room">
+                <div class="panel-content">
+                    Revenue War Room
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.8.1/nouislider.min.js" integrity="sha512-g/feAizmeiVKSwvfW0Xk3ZHZqv5Zs8PEXEBKzL15pM0SevEvoX8eJ4yFWbqakvRj7vtw1Q97bLzEpG2IVWX0Mg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js" integrity="sha512-rMGGF4wg1R73ehtnxXBt5mbUfN9JUJwbk21KMlnLZDJh7BkPmeovBuddZCENJddHYYMkCh9hPFnPmS9sspki8g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-extendext@1.0.0/jquery-extendext.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- ag-grid -->
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/css/selectize.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.13.3/js/standalone/selectize.min.js"></script>
+	
+    <script src="/assets/js/vendor/query-builder.js"></script>
+    <script src="/assets/js/vendor/chosen.jquery.min.js"></script>
+    <script src="/assets/js/constants.js"></script>
+    <script src="/assets/js/queryBuilderManager.js"></script>
+    <script src="/assets/js/helpers.js"></script>
+    <script src="/assets/js/gridHeaderTooltip.js"></script>
+    <script src="/assets/js/gridManager.js"></script>
+    <script src="/assets/js/render.js"></script>
+
+    <script src="/assets/js/dashboards/crossSellDashboard.js"></script>
+    <script src="/assets/js/dashboards/upSellDashboard.js"></script>
+    <script src="/assets/js/dashboards/aspBuildDashboard.js"></script>
+    <script src="/assets/js/dashboards/customerNonSkuDashboard.js"></script>
+
+    <script src="/assets/js/dashboards/dataCubeDashboard.js"></script>
+    <script src="/assets/js/dashboards/arrsDashboard.js"></script>
+    <script src="/assets/js/dashboards/paretoAnalysisDashboard.js"></script>
+    <script src="/assets/js/dashboards/attachRatesDashboard.js"></script>
+    <script src="/assets/js/dashboards/bundlingDashboard.js"></script>
+
+    <script src="/assets/js/aiAssistant.js"></script>
+    <script src="/assets/js/dashboards/clusteringDashboard.js"></script>
+    <script src="/assets/js/dashboards/modelIntegrationDashboard.js"></script>
+
+    <script src="/assets/js/dataManager.js"></script>
+    <script src="/assets/js/dashboardManager.js"></script>
+    <script src="/assets/js/modelManager.js"></script>
+
+    <script src="/assets/js/eventManager.js"></script>
+    <script>
+        eventManager.init();
+    </script>
+    <link rel="stylesheet" href="./assets/css/edit.css">
+    
+</body>
+</html>
+
