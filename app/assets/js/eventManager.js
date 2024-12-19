@@ -18,7 +18,7 @@ let eventManager = {
     eventManager.initAccessHandlers();
     dataManager.loadDataSheet();
     queryBuilderManager.init();
-    eventManager.navItemClick($(".nav-item[data-panel='account']"));
+    eventManager.navItemClick($(".nav-item[data-panel='input']"));
     aiAssistant.init();
   },
   initAccessHandlers: function () {
