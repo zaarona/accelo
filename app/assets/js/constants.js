@@ -1,3 +1,3 @@
 let constants = {
-    HOST_URL: window.location.origin
+    HOST_URL: window.location.origin + '/'
 }
