@@ -1,3 +1,3 @@
 let constants = {
-    HOST_URL: "http://localhost:5253/"
+    HOST_URL: window.location.origin
 }

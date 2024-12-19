@@ -11,3 +11,15 @@ app/.env
 sample-inputs/
 
 
+.DS_Store
+# python cache
+__pycache__/
+
+# node cache
+node_modules/
+
+# node cache
+.next/
+
+# python pyc files
+*.pyc
