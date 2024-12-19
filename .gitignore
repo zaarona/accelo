@@ -8,5 +8,6 @@ cloud/
 
 app/instance/
 app/.env
+sample-inputs/
 
 
